@@ -1,0 +1,4 @@
+# Ignore all
+test/*
+# Unignore all with extensions
+test/!*.*
