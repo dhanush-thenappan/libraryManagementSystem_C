@@ -1,36 +1,50 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
-#define LEFT(str, w) \
-    ({int m = w + strlen(str); \
-    m % 2 ? (m + 1) / 2 : m / 2;})
+struct book {
+    int id;
+    char title[50];
+    char author[20];
+    char category[20];
+    long ISBN;
+    char publisher[20];
+    int quantity;
+    int availability;
+    float price;
+};
 
-#define RIGHT(str, w) \
-({ int m = w - strlen(str); m % 2 ? (m - 1) / 2 : m / 2; })
+typedef struct book Book;
 
-#define STR_CENTER(str, width) \
-    LEFT(str, width), str, RIGHT(str, width), ""
+int main() {
+    FILE *fp;
+    fp = fopen("./newfile.txt", "w+");
+    if (fp == NULL) {
+        printf("Error opening file!\n");
+        return 1;
+    }
 
-#define PRINTF_CENTER(width, start, fmt, end, ...) ({ \
-    int n = snprintf(NULL, 0, fmt, __VA_ARGS__);     \
-    int m = width - n;                               \
-    int left = m % 2 ? (m + 1) / 2 : m / 2;          \
-    int right = m % 2 ? (m - 1) / 2 : m / 2;         \
-    printf(start "%*s" fmt "%*s" end, left, "",      \
-           __VA_ARGS__, right, "");                  \
-})
+    Book b1 = {123, "C prog", "Anonymous", "programming", 1234567891234, "ASUS", 10, 5, 15.99};
+    Book b12 = {1, "12 C prog", "Anonymous 12", "programming 12", 1234567891234, "ASUS 12", 10, 5, 17.99};
+    fprintf(stdout, "Enter data:\n");
+    Book b123;
+    fscanf(stdin, "%d %s %s %s %ld %d %d %f", &(b123.id), b123.title, b123.author, b123.category, &(b123.ISBN), &(b123.quantity), &(b123.availability), &(b123.price));
+    fwrite(&b123, sizeof(Book), 1, fp);
+    fwrite(&b1, sizeof(Book), 1, fp);
+    fwrite(&b12, sizeof(Book), 1, fp);
 
-#define MYFORMAT_CENTER(width, fmt, ...)  \
-    PRINTF_CENTER(40, "[", fmt  , "]\n", __VA_ARGS__)
+    fclose(fp);
 
-int main(int argc, char const *argv[])
-{
-    printf("%*s%*s\n\n", STR_CENTER("--- Hello World ---", 40));
-    printf("|%*s%*s|\n", STR_CENTER("I am okay today", 40));
-    
-    MYFORMAT_CENTER(40, "%d, e is %f", 1, 2.71828);
-    MYFORMAT_CENTER(40, "%d, pi is %f", 2, 3.1415926);
-    MYFORMAT_CENTER(40, "%s %d.", "This is such a long string that it exceeds the given size:", 40);
-// 
+    fp = fopen("./newfile.txt", "r");
+    if (fp == NULL) {
+        printf("Error opening file!\n");
+        return 1;
+    }
+
+    while (fread(&b1, sizeof(Book), 1, fp) == 1) {
+        printf("%d %s %s %s %ld %d %d $%.2f\n", b1.id, b1.title, b1.author, b1.category, b1.ISBN, b1.quantity, b1.availability, b1.price);
+    }
+
+    fclose(fp);
     return 0;
 }
