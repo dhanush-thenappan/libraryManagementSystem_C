@@ -9,7 +9,7 @@ struct book{
     char title[50]; // Title
     char author[20]; // Author
     char category[20]; // Category
-    int ISBN; // ISBN
+    long ISBN; // ISBN
     char publisher[20]; // Publisher
     int quantity; // Quantity
     int availability; // Availability
