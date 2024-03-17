@@ -3,6 +3,9 @@
 #define LIBRARYMANAGEMENTSYSTEM_H
 // Macros
 #define MAXBORROWLIMIT 2
+#define ADMINNAME "Admin"
+#define ADMINPASSWORD "admin@123"
+#define MAXLOGINATTEMPT 5
 // Structure definitions
 struct book{
     int id; // ID
@@ -28,6 +31,7 @@ typedef struct book Book;
 typedef struct user User;
 
 // Function declarations
-void greetUser(void);
+void admin(void);
+void user(void);
 
 #endif
