@@ -66,5 +66,39 @@ void admin() {
 }
 
 void user() {
+    char *choice = (char*)malloc(sizeof(char));
+    UserTypeChoice:
+    printf("\n| Choose one:\n| [E]xisting user (or) [N]ew user\n| Your choice:");
+    getchar();
+    scanf("%c", choice);
+    switch (*choice)
+    {
+    case 'E':
+        existingUser();
+        break;
+    case 'e':
+        existingUser();
+        break;
+    case 'N':
+        createNewUser();
+        break;
+    case 'n':
+        createNewUser();
+        break;
+    default:
+        printf("| Enter a valid choice\n");
+        getchar();
+        goto UserTypeChoice;
+        break;
+    }
+    free(choice);
+}
 
+
+void existingUser() {
+    printf("Existing\n");
+}
+
+int createNewUser() {
+    printf("New\n");
 }
