@@ -34,4 +34,7 @@ typedef struct user User;
 void admin(void);
 void user(void);
 
+int createNewUser(void);
+void existingUser(void);
+
 #endif
