@@ -8,11 +8,12 @@
 
 int main() {
     char userType;
+    printf("\e[1;1H\e[2J");
     printf("| Welcome to Library Management System\n");
     UserTypeCheck:
     printf("| Are you [A]dmin or [U]ser : ");
     scanf("%c", &userType);
-    if(userType > 97 && userType < 123){
+    if(userType >= 97 && userType <= 123){
         userType -= 32;
     }
     switch(userType) {
@@ -34,12 +35,13 @@ void admin() {
     char *adminName = (char*)malloc(sizeof(ADMINNAME)+1);
     char *adminPassword = (char*)malloc(sizeof(ADMINPASSWORD)+1);
     int loginAttempt = 1;
+    printf("\e[1;1H\e[2J");
     while(loginAttempt <= MAXLOGINATTEMPT)
     {
         printf("| Enter admin name : ");
         scanf("%s", adminName);
         if(!strncmp(adminName, ADMINNAME, sizeof(ADMINNAME))){
-            printf("| Welcome %s\n", ADMINNAME);
+            printf("\n| Welcome %s\n", ADMINNAME);
             break;
         }
         else {
@@ -48,13 +50,12 @@ void admin() {
     }
     while(loginAttempt <= MAXLOGINATTEMPT)
     {
-        printf("\nEnter admin password : ");
+        printf("| Enter admin password : ");
         scanf("%s", adminPassword);
         if(!strncmp(adminPassword, ADMINPASSWORD, sizeof(ADMINPASSWORD))){
             printf("| Password Correct\n");
-            free(adminName);
-            free(adminPassword);
-
+            adminManagement();
+            break;
         }
         else {
             printf("| Wrong admin password. Please try again. %d attempts left\n", MAXLOGINATTEMPT - loginAttempt++);
@@ -71,8 +72,8 @@ void user() {
     printf("\n| Choose one:\n| [E]xisting user (or) [N]ew user\n| Your choice:");
     getchar();
     scanf("%c", choice);
-    if(choice > 97 && choice < 123){
-        choice -= 32;
+    if(*choice >= 97 && *choice <= 123){
+        *choice -= 32;
     }
     switch (*choice)
     {
@@ -83,6 +84,7 @@ void user() {
         createNewUser();
         break;
     default:
+        printf("\e[1;1H\e[2J");
         printf("| Enter a valid choice\n");
         getchar();
         goto UserTypeChoice;
