@@ -2,3 +2,4 @@
 test/*
 # Unignore all with extensions
 test/!*.*
+.vscode/
