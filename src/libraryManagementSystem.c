@@ -4,6 +4,7 @@
 #include <stdlib.h>
 // User header files
 #include "libraryManagementSystem.h"
+#include "./Admin/admin.h"
 
 int main() {
     char userType;
@@ -11,17 +12,14 @@ int main() {
     UserTypeCheck:
     printf("| Are you [A]dmin or [U]ser : ");
     scanf("%c", &userType);
+    if(userType > 97 && userType < 123){
+        userType -= 32;
+    }
     switch(userType) {
         case 'A':
             admin();
             break;
-        case 'a':
-            admin();
-            break;
         case 'U':
-            user();
-            break;
-        case 'u':
             user();
             break;
         default:
@@ -38,7 +36,7 @@ void admin() {
     int loginAttempt = 1;
     while(loginAttempt <= MAXLOGINATTEMPT)
     {
-        printf("\nEnter admin name : ");
+        printf("| Enter admin name : ");
         scanf("%s", adminName);
         if(!strncmp(adminName, ADMINNAME, sizeof(ADMINNAME))){
             printf("| Welcome %s\n", ADMINNAME);
@@ -54,7 +52,9 @@ void admin() {
         scanf("%s", adminPassword);
         if(!strncmp(adminPassword, ADMINPASSWORD, sizeof(ADMINPASSWORD))){
             printf("| Password Correct\n");
-            break;
+            free(adminName);
+            free(adminPassword);
+
         }
         else {
             printf("| Wrong admin password. Please try again. %d attempts left\n", MAXLOGINATTEMPT - loginAttempt++);
@@ -71,18 +71,15 @@ void user() {
     printf("\n| Choose one:\n| [E]xisting user (or) [N]ew user\n| Your choice:");
     getchar();
     scanf("%c", choice);
+    if(choice > 97 && choice < 123){
+        choice -= 32;
+    }
     switch (*choice)
     {
     case 'E':
         existingUser();
         break;
-    case 'e':
-        existingUser();
-        break;
     case 'N':
-        createNewUser();
-        break;
-    case 'n':
         createNewUser();
         break;
     default:
