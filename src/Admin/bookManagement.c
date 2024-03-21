@@ -6,8 +6,9 @@
 #include "../libraryManagementSystem.h"
 #include "./admin.h"
 #include "./bookManagement.h"
+#include "../CRUD/CRUDbook.h"
 
-void bookManagement() {
+void bookManagement(FILE *booklist) {
     char *choice = (char*)malloc(sizeof(char));
     printf("\e[1;1H\e[2J");
     printf("| Welcome to Book management\n");
@@ -20,6 +21,7 @@ void bookManagement() {
     }
     switch(*choice) {
         case 'C':
+            createBook(booklist);
             break;
         case 'U':
             break;

@@ -2,6 +2,6 @@
 
 #define BOOKMANAGEMENT_H
 
-void bookManagement(void);
+void bookManagement(FILE*);
 
 #endif
