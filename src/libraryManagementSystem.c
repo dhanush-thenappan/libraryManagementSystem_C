@@ -5,9 +5,12 @@
 // User header files
 #include "libraryManagementSystem.h"
 #include "./Admin/admin.h"
+// Global definitions
+FILE *booklist;
 
 int main() {
     char userType;
+    booklist = fopen("./bookList", "ab+");
     printf("\e[1;1H\e[2J");
     printf("| Welcome to Library Management System\n");
     UserTypeCheck:
@@ -28,6 +31,17 @@ int main() {
             getchar();
             goto UserTypeCheck;
     }
+    fclose(booklist);
+    booklist = fopen("./bookList", "rb+");
+    rewind(booklist);
+    printf("\e[1;1H\e[2J");
+    int i=1;
+    while(!feof(booklist)){
+        printf("%d\n", i++);
+        Book t;
+        fread(&t, sizeof(Book), 1, booklist);
+        printf("ID %d\nTitle %s\nAuthor %s\nCategory %s\nISBN %ld\nPublisher %s\nQuantity %d\nAvailability %d\nPrice $%.2f\n", t.id, t.title, t.author, t.category, t.ISBN, t.publisher, t.quantity, t.availability, t.price);
+    }
     return 0;
 }
 
@@ -41,7 +55,7 @@ void admin() {
         printf("| Enter admin name : ");
         scanf("%s", adminName);
         if(!strncmp(adminName, ADMINNAME, sizeof(ADMINNAME))){
-            printf("\n| Welcome %s\n", ADMINNAME);
+            printf("| Welcome %s\n", ADMINNAME);
             break;
         }
         else {
@@ -54,7 +68,7 @@ void admin() {
         scanf("%s", adminPassword);
         if(!strncmp(adminPassword, ADMINPASSWORD, sizeof(ADMINPASSWORD))){
             printf("| Password Correct\n");
-            adminManagement();
+            adminManagement(booklist);
             break;
         }
         else {
