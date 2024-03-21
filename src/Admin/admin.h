@@ -3,6 +3,6 @@
 #define ADMIN_H
 
 // Function declarations
-void adminManagement(void);
+void adminManagement(FILE*);
 
 #endif

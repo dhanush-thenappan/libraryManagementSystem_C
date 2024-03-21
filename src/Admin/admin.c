@@ -7,7 +7,7 @@
 #include "./admin.h"
 #include "./bookManagement.h"
 
-void adminManagement() {
+void adminManagement(FILE *booklist) {
     getchar();
     printf("\e[1;1H\e[2J");
     printf("| Welcome admin\n");
@@ -21,7 +21,7 @@ void adminManagement() {
     switch(*choice) {
         case 'B':
             getchar();
-            bookManagement();
+            bookManagement(booklist);
             break;
         case 'U':
             getchar();
