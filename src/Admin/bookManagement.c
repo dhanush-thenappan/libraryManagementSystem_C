@@ -16,7 +16,7 @@ void bookManagement(FILE *booklist) {
     printf("| [C]reate book\n| [U]pdate book\n| [D]elete book\n| [R]ead details of a book\n| Your options : ");
     scanf("%c", choice);
     
-    if(*choice > 97 && *choice < 123){
+    if(*choice >= 97 && *choice <= 123){
         *choice -= 32;
     }
     switch(*choice) {
@@ -28,6 +28,7 @@ void bookManagement(FILE *booklist) {
         case 'D':
             break;
         case 'R':
+            readBook(booklist);
             break;
         default:
             printf("\e[1;1H\e[2J");
