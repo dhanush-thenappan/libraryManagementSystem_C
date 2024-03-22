@@ -32,16 +32,6 @@ int main() {
             goto UserTypeCheck;
     }
     fclose(booklist);
-    booklist = fopen("./bookList", "rb+");
-    rewind(booklist);
-    printf("\e[1;1H\e[2J");
-    int i=1;
-    while(!feof(booklist)){
-        printf("%d\n", i++);
-        Book t;
-        fread(&t, sizeof(Book), 1, booklist);
-        printf("ID %d\nTitle %s\nAuthor %s\nCategory %s\nISBN %ld\nPublisher %s\nQuantity %d\nAvailability %d\nPrice $%.2f\n", t.id, t.title, t.author, t.category, t.ISBN, t.publisher, t.quantity, t.availability, t.price);
-    }
     return 0;
 }
 
