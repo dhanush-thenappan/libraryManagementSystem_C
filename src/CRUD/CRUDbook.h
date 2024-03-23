@@ -5,5 +5,6 @@
 int createBook(FILE *);
 int readBook(FILE *);
 int printAllBooks(FILE *);
+int readSpecificBooks(FILE *);
 
 #endif

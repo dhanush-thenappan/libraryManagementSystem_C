@@ -56,7 +56,7 @@ int readBook(FILE *booklist){
             printAllBooks(booklist);
             break;
         case 'S':
-            printf("| Specific\n");
+            readSpecificBooks(booklist);
             break;
         default:
             printf("\e[1;1H\e[2J");
@@ -76,5 +76,30 @@ int printAllBooks(FILE *booklist){
         temp->publisher[strlen(temp->publisher)-1] = '\0';
         printf("%d ID %d Title %s Author %s Category %s ISBN %ld Publisher %s Quantity %d Availability %d Price $%.2f\n", i++, temp->id, temp->title, temp->author, temp->category, temp->ISBN, temp->publisher, temp->quantity, temp->availability, temp->price);
     }
+    return 0;
+}
+
+int readSpecificBooks(FILE *booklist) {
+    char *searchStr = (char*)malloc(sizeof(char) * 20);
+    Book *tempbook = (Book*)malloc(sizeof(Book));
+    printf("\e[1;1H\e[2J");
+    printf("| Enter title/author/category of the book to search\n");
+    getchar();
+    printf("| Enter here : ");
+    fgets(searchStr, 20, stdin);
+    searchStr[strcspn(searchStr, "\n")] = '\0';
+    printf("| Search string : %s\n", searchStr);
+    rewind(booklist);
+    while(fread(tempbook, sizeof(Book), 1, booklist)) {
+        // printf("Title: %s\n", tempbook->title);
+        tempbook->author[strlen(tempbook->author)-1] = '\0';
+        tempbook->category[strlen(tempbook->category)-1] = '\0';
+        tempbook->publisher[strlen(tempbook->publisher)-1] = '\0';
+        if(strstr(tempbook->title, searchStr) != NULL){
+            printf("ID %d Title %s Author %s Category %s ISBN %ld Publisher %s Quantity %d Availability %d Price $%.2f\n", tempbook->id, tempbook->title, tempbook->author, tempbook->category, tempbook->ISBN, tempbook->publisher, tempbook->quantity, tempbook->availability, tempbook->price);
+        }
+    }
+    free(tempbook);
+    free(searchStr);
     return 0;
 }
