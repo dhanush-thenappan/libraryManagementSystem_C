@@ -23,12 +23,12 @@ void bookManagement(FILE *booklist) {
         case 'C':
             createBook(booklist);
             break;
+        case 'R':
+            readBook(booklist);
+            break;
         case 'U':
             break;
         case 'D':
-            break;
-        case 'R':
-            readBook(booklist);
             break;
         default:
             printf("\e[1;1H\e[2J");
