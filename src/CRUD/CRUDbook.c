@@ -95,7 +95,7 @@ int readSpecificBooks(FILE *booklist) {
         tempbook->author[strlen(tempbook->author)-1] = '\0';
         tempbook->category[strlen(tempbook->category)-1] = '\0';
         tempbook->publisher[strlen(tempbook->publisher)-1] = '\0';
-        if(strstr(tempbook->title, searchStr) != NULL){
+        if((strstr(tempbook->title, searchStr) != NULL) || (strstr(tempbook->author, searchStr) != NULL) || (strstr(tempbook->category, searchStr) != NULL)){
             printf("ID %d Title %s Author %s Category %s ISBN %ld Publisher %s Quantity %d Availability %d Price $%.2f\n", tempbook->id, tempbook->title, tempbook->author, tempbook->category, tempbook->ISBN, tempbook->publisher, tempbook->quantity, tempbook->availability, tempbook->price);
         }
     }
