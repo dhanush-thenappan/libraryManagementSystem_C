@@ -27,6 +27,7 @@ void bookManagement(FILE *booklist) {
             readBook(booklist);
             break;
         case 'U':
+            updateBook(booklist);
             break;
         case 'D':
             break;
