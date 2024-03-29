@@ -10,18 +10,22 @@
 
 void bookManagement(FILE *booklist) {
     char *choice = (char*)malloc(sizeof(char));
+    BookManagementStart:
     printf("\e[1;1H\e[2J");
     printf("| Welcome to Book management\n");
     BMChoiceCheck:
     printf("| [C]reate book\n| [U]pdate book\n| [D]elete book\n| [R]ead details of a book\n| Your options : ");
     scanf("%c", choice);
-    
     if(*choice >= 97 && *choice <= 123){
         *choice -= 32;
     }
     switch(*choice) {
         case 'C':
-            createBook(booklist);
+            int createBookreturn;
+            createBookreturn = createBook(booklist);
+            if(createBookreturn){
+                goto BookManagementStart;
+            }
             break;
         case 'R':
             readBook(booklist);

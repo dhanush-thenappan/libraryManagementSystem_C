@@ -8,6 +8,7 @@
 #include "./CRUDbook.h"
 
 int createBook(FILE *booklist) {
+    CreateAgain:
     Book *temporaryBook = (Book*)malloc(sizeof(Book));
     if(temporaryBook == NULL){
         printf("Memalloc failed\n");
@@ -34,10 +35,39 @@ int createBook(FILE *booklist) {
     scanf("%d", &(temporaryBook->quantity));
     printf("| Enter book price : ");
     scanf("%f", &(temporaryBook->price));
-    printf("| Thank you for entering the details of the book\n");
     temporaryBook -> availability = temporaryBook -> quantity;
     fwrite(temporaryBook, sizeof(Book), 1, booklist);
+    getchar();
+    printf("| Thank you for entering the details of the book\n");
+    CreateBookCheck:
+    printf("| Do you wish to continue or go back (Y/N)\n");
+    char *choice = (char*)malloc(sizeof(char));
+    printf("| Your option : ");
+    scanf("%c", choice);
+    getchar();
+    if(*choice >= 97 && *choice <= 123){
+        *choice -= 32;
+    }
+    switch(*choice){
+        case 'Y':
+            goto CreateAgain;
+            break;
+        case 'N':
+            free(temporaryBook);
+            free(choice);
+            choice = NULL; 
+            temporaryBook = NULL;
+            return 1;
+        default:
+            printf("\e[1;1H\e[2J");
+            printf("| Enter a valid option\n");
+            getchar();
+            goto CreateBookCheck;
+    }
     free(temporaryBook);
+    free(choice);
+    choice = NULL; 
+    temporaryBook = NULL;
     return 0;
 }
 
