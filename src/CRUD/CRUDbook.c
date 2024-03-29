@@ -74,6 +74,7 @@ int createBook(FILE *booklist) {
 
 int readBook(FILE *booklist){
     char *choice = (char*)malloc(sizeof(char));
+    ReadAgain:
     printf("\e[1;1H\e[2J");
     readBookChoiceCheck:
     printf("| Read book details\n| [A]ll books\n| [S]pecific book\nYour choice : ");
@@ -93,7 +94,32 @@ int readBook(FILE *booklist){
             printf("| Enter a valid choice\n");
             goto readBookChoiceCheck;
     }
+    ReadBookCheck:
+    printf("| Do you wish to continue or go back (Y/N)\n");
+    printf("| Your option : ");
+    getchar();
+    scanf("%c", choice);
+    getchar();
+    if(*choice >= 97 && *choice <= 123){
+        *choice -= 32;
+    }
+    switch(*choice){
+        case 'Y':
+            goto ReadAgain;
+            break;
+        case 'N':
+            free(choice);
+            choice = NULL;
+            return 1;
+        default:
+            printf("\e[1;1H\e[2J");
+            printf("| Enter a valid choice\n");
+            getchar();
+            goto ReadBookCheck;
+    }
     free(choice);
+    choice = NULL;
+    return 0;
 }
 
 int printAllBooks(FILE *booklist){
@@ -129,6 +155,7 @@ int readSpecificBooks(FILE *booklist) {
             printf("ID %d Title %s Author %s Category %s ISBN %ld Publisher %s Quantity %d Availability %d Price $%.2f\n", tempbook->id, tempbook->title, tempbook->author, tempbook->category, tempbook->ISBN, tempbook->publisher, tempbook->quantity, tempbook->availability, tempbook->price);
         }
     }
+    getchar();
     free(tempbook);
     free(searchStr);
     return 0;
