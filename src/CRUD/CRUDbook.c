@@ -74,6 +74,7 @@ int createBook(FILE *booklist) {
 
 int readBook(FILE *booklist){
     char *choice = (char*)malloc(sizeof(char));
+    ReadAgain:
     printf("\e[1;1H\e[2J");
     readBookChoiceCheck:
     printf("| Read book details\n| [A]ll books\n| [S]pecific book\nYour choice : ");
@@ -84,6 +85,7 @@ int readBook(FILE *booklist){
     switch(*choice){
         case 'A':
             printAllBooks(booklist);
+            getchar();
             break;
         case 'S':
             readSpecificBooks(booklist);
@@ -93,7 +95,35 @@ int readBook(FILE *booklist){
             printf("| Enter a valid choice\n");
             goto readBookChoiceCheck;
     }
+    ReadBookCheck:
+    printf("| Do you wish to continue or go back (Y/N)\n");
+    printf("| Your option : ");
+    // printf("\nC : %c\n", *choice);
+    // getchar();
+    // getchar();
+    scanf("%c", choice);
+    printf("\nC : %c\n", *choice);
+    getchar();
+    if(*choice >= 97 && *choice <= 123){
+        *choice -= 32;
+    }
+    switch(*choice){
+        case 'Y':
+            goto ReadAgain;
+            break;
+        case 'N':
+            free(choice);
+            choice = NULL;
+            return 1;
+        default:
+            printf("\e[1;1H\e[2J");
+            printf("| Enter a valid choice\n");
+            getchar();
+            goto ReadBookCheck;
+    }
     free(choice);
+    choice = NULL;
+    return 0;
 }
 
 int printAllBooks(FILE *booklist){
@@ -116,8 +146,9 @@ int readSpecificBooks(FILE *booklist) {
     printf("| Enter title/author/category of the book to search\n");
     getchar();
     printf("| Enter here : ");
-    fgets(searchStr, 20, stdin);
-    searchStr[strcspn(searchStr, "\n")] = '\0';
+    // fgets(searchStr, 20, stdin);
+    // searchStr[strcspn(searchStr, "\n")] = '\0';
+    scanf("%[^\n]%*c", searchStr);
     printf("| Search string : %s\n", searchStr);
     rewind(booklist);
     while(fread(tempbook, sizeof(Book), 1, booklist)) {
@@ -127,6 +158,7 @@ int readSpecificBooks(FILE *booklist) {
         // tempbook->publisher[strlen(tempbook->publisher)-1] = '\0';
         if((strstr(tempbook->title, searchStr) != NULL) || (strstr(tempbook->author, searchStr) != NULL) || (strstr(tempbook->category, searchStr) != NULL)){
             printf("ID %d Title %s Author %s Category %s ISBN %ld Publisher %s Quantity %d Availability %d Price $%.2f\n", tempbook->id, tempbook->title, tempbook->author, tempbook->category, tempbook->ISBN, tempbook->publisher, tempbook->quantity, tempbook->availability, tempbook->price);
+            // getchar();
         }
     }
     free(tempbook);

@@ -21,14 +21,14 @@ void bookManagement(FILE *booklist) {
     }
     switch(*choice) {
         case 'C':
-            int createBookreturn;
-            createBookreturn = createBook(booklist);
-            if(createBookreturn){
+            if(createBook(booklist)){
                 goto BookManagementStart;
             }
             break;
         case 'R':
-            readBook(booklist);
+            if(readBook(booklist)){
+                goto BookManagementStart;
+            }
             break;
         case 'U':
             updateBook(booklist);
