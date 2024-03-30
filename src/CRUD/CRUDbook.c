@@ -98,9 +98,6 @@ int readBook(FILE *booklist){
     ReadBookCheck:
     printf("| Do you wish to continue or go back (Y/N)\n");
     printf("| Your option : ");
-    // printf("\nC : %c\n", *choice);
-    // getchar();
-    // getchar();
     scanf("%c", choice);
     printf("\nC : %c\n", *choice);
     getchar();
@@ -131,11 +128,10 @@ int printAllBooks(FILE *booklist){
     Book *temp = (Book*)malloc(sizeof(Book));
     int i=1;
     while(fread(temp, sizeof(Book), 1, booklist)){
-        // temp->author[strlen(temp->author)-1] = '\0';
-        // temp->category[strlen(temp->category)-1] = '\0';
-        // temp->publisher[strlen(temp->publisher)-1] = '\0';
         printf("%d ID %d Title %s Author %s Category %s ISBN %ld Publisher %s Quantity %d Availability %d Price $%.2f\n", i++, temp->id, temp->title, temp->author, temp->category, temp->ISBN, temp->publisher, temp->quantity, temp->availability, temp->price);
     }
+    free(temp);
+    temp = NULL;
     return 0;
 }
 
@@ -163,6 +159,8 @@ int readSpecificBooks(FILE *booklist) {
     }
     free(tempbook);
     free(searchStr);
+    tempbook = NULL;
+    searchStr = NULL;
     return 0;
 }
 
